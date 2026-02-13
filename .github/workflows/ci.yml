@@ -23,6 +23,11 @@ jobs:
         cd app
         npm install
 
+    - name: Install Playwright Browsers
+      run: |
+        cd app
+        npm run test:setup
+
     - name: Run tests
       run: |
         cd app

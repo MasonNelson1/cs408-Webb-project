@@ -1,45 +1,742 @@
+/* ============================================================
+   DevTrack — Custom Styles
+   ============================================================ */
+
+:root {
+  --dt-navy: #0f172a;
+  --dt-navy-mid: #1e293b;
+  --dt-navy-light: #334155;
+  --dt-blue: #3b82f6;
+  --dt-blue-dark: #2563eb;
+  --dt-blue-pale: #eff6ff;
+  --dt-green: #16a34a;
+  --dt-green-pale: #f0fdf4;
+  --dt-red: #dc2626;
+  --dt-red-pale: #fef2f2;
+  --dt-amber: #d97706;
+  --dt-amber-pale: #fffbeb;
+  --dt-border: #e2e8f0;
+  --dt-bg: #f8fafc;
+  --dt-text: #0f172a;
+  --dt-text-muted: #64748b;
+  --dt-radius: 10px;
+  --dt-radius-sm: 6px;
+  --dt-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+  --dt-shadow-md: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.05);
+  --font-sans: 'DM Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+/* Base */
 body {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  min-height: 100vh;
-  padding: 20px 0;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-family: var(--font-sans);
+  background: var(--dt-bg);
+  color: var(--dt-text);
+  font-size: 15px;
+  line-height: 1.6;
 }
 
-a {
-  color: #00B7FF;
+/* ============================================================
+   Navbar
+   ============================================================ */
+.dt-navbar {
+  background: var(--dt-navy);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  padding: 0.65rem 0;
 }
 
-.card {
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.card-header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-}
-
-.todo-item {
-  border-bottom: 1px solid #e9ecef;
-  padding: 12px 0;
+.dt-brand {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #fff !important;
+  text-decoration: none;
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  gap: 0.4rem;
+  letter-spacing: -0.01em;
+}
+
+.dt-brand-icon {
+  color: var(--dt-blue);
+  font-size: 1.15rem;
+  display: flex;
   align-items: center;
 }
 
-.todo-item:last-child {
+.dt-navbar .nav-link {
+  color: rgba(255,255,255,0.7) !important;
+  font-weight: 500;
+  font-size: 0.9rem;
+  padding: 0.4rem 0.75rem !important;
+  border-radius: var(--dt-radius-sm);
+  transition: color 0.15s, background 0.15s;
+}
+
+.dt-navbar .nav-link:hover {
+  color: #fff !important;
+  background: rgba(255,255,255,0.08);
+}
+
+.dt-btn-new {
+  background: var(--dt-blue);
+  color: #fff !important;
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: var(--dt-radius-sm);
+  text-decoration: none;
+  transition: background 0.15s;
+  border: none;
+}
+
+.dt-btn-new:hover {
+  background: var(--dt-blue-dark);
+  color: #fff !important;
+}
+
+/* ============================================================
+   Hero
+   ============================================================ */
+.dt-hero {
+  background: var(--dt-navy);
+  position: relative;
+  padding: 80px 0 70px;
+  overflow: hidden;
+}
+
+.dt-hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(59,130,246,0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59,130,246,0.07) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+
+.dt-hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: linear-gradient(to bottom, transparent, var(--dt-bg));
+}
+
+.dt-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(59,130,246,0.15);
+  color: #93c5fd;
+  border: 1px solid rgba(59,130,246,0.3);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.3rem 0.85rem;
+  border-radius: 999px;
+  letter-spacing: 0.02em;
+}
+
+.dt-hero-title {
+  font-size: clamp(2.4rem, 5vw, 3.5rem);
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin-bottom: 1.25rem;
+}
+
+.dt-hero-sub {
+  color: rgba(255,255,255,0.6);
+  font-size: 1.05rem;
+  max-width: 560px;
+  margin: 0 auto 2rem;
+  line-height: 1.7;
+}
+
+.dt-hero-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.dt-feature-strip {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--dt-radius);
+  display: flex;
+  align-items: stretch;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+.dt-feature-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.1rem 1.4rem;
+}
+
+.dt-feature-divider {
+  width: 1px;
+  background: rgba(255,255,255,0.1);
+  flex-shrink: 0;
+}
+
+.dt-feature-icon {
+  font-size: 1.4rem;
+  color: var(--dt-blue);
+  flex-shrink: 0;
+}
+
+.dt-feature-label {
+  font-weight: 600;
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+.dt-feature-desc {
+  color: rgba(255,255,255,0.5);
+  font-size: 0.8rem;
+}
+
+/* ============================================================
+   Buttons
+   ============================================================ */
+.dt-btn-primary {
+  background: var(--dt-blue);
+  color: #fff;
+  border: none;
+  font-weight: 600;
+  border-radius: var(--dt-radius-sm);
+  padding: 0.5rem 1.15rem;
+  transition: background 0.15s;
+  text-decoration: none;
+}
+
+.dt-btn-primary:hover {
+  background: var(--dt-blue-dark);
+  color: #fff;
+}
+
+.dt-btn-ghost {
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.85);
+  border: 1px solid rgba(255,255,255,0.15);
+  font-weight: 600;
+  border-radius: var(--dt-radius-sm);
+  padding: 0.5rem 1.15rem;
+  transition: background 0.15s;
+  text-decoration: none;
+}
+
+.dt-btn-ghost:hover {
+  background: rgba(255,255,255,0.14);
+  color: #fff;
+}
+
+.dt-btn-outline {
+  background: transparent;
+  color: var(--dt-text-muted);
+  border: 1px solid var(--dt-border);
+  font-weight: 500;
+  border-radius: var(--dt-radius-sm);
+  transition: border-color 0.15s, color 0.15s;
+  text-decoration: none;
+}
+
+.dt-btn-outline:hover {
+  border-color: var(--dt-navy-light);
+  color: var(--dt-text);
+}
+
+.dt-btn-complete {
+  background: var(--dt-green-pale);
+  color: var(--dt-green);
+  border: 1px solid rgba(22,163,74,0.2);
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: var(--dt-radius-sm);
+  padding: 0.25rem 0.6rem;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+
+.dt-btn-complete:hover {
+  background: #dcfce7;
+}
+
+.dt-btn-delete {
+  background: var(--dt-red-pale);
+  color: var(--dt-red);
+  border: 1px solid rgba(220,38,38,0.15);
+  font-size: 0.85rem;
+  border-radius: var(--dt-radius-sm);
+  padding: 0.25rem 0.55rem;
+  transition: background 0.15s;
+}
+
+.dt-btn-delete:hover {
+  background: #fee2e2;
+}
+
+/* ============================================================
+   Cards & Page Chrome
+   ============================================================ */
+.dt-card {
+  background: #fff;
+  border: 1px solid var(--dt-border);
+  border-radius: var(--dt-radius);
+  box-shadow: var(--dt-shadow);
+  overflow: hidden;
+}
+
+.dt-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--dt-border);
+  background: #f8fafc;
+  font-size: 0.9rem;
+}
+
+.dt-task-count {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--dt-text-muted);
+  background: var(--dt-border);
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+}
+
+.dt-page-title {
+  font-size: 1.65rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.dt-page-sub {
+  color: var(--dt-text-muted);
+  font-size: 0.9rem;
+}
+
+.dt-back-link {
+  color: var(--dt-text-muted);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: color 0.15s;
+}
+
+.dt-back-link:hover {
+  color: var(--dt-text);
+}
+
+/* ============================================================
+   Project Cards
+   ============================================================ */
+.dt-project-card {
+  background: #fff;
+  border: 1px solid var(--dt-border);
+  border-radius: var(--dt-radius);
+  box-shadow: var(--dt-shadow);
+  padding: 1.25rem;
+  height: 100%;
+  position: relative;
+  transition: box-shadow 0.2s, border-color 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+
+.dt-project-card:hover {
+  box-shadow: var(--dt-shadow-md);
+  border-color: #cbd5e1;
+}
+
+.dt-project-card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  margin-bottom: 0.65rem;
+}
+
+.dt-project-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--dt-blue-pale);
+  color: var(--dt-blue);
+  border-radius: var(--dt-radius-sm);
+  width: 32px;
+  height: 32px;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+
+.dt-project-icon.lg {
+  width: 44px;
+  height: 44px;
+  font-size: 1.25rem;
+}
+
+.dt-project-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--dt-text);
+  line-height: 1.3;
+}
+
+.dt-project-desc {
+  color: var(--dt-text-muted);
+  font-size: 0.85rem;
+  line-height: 1.55;
+  flex-grow: 1;
+  margin-bottom: 0.85rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.dt-project-meta {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 0.85rem;
+}
+
+.dt-project-link {
+  color: var(--dt-blue);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* ============================================================
+   Task Pills & Status
+   ============================================================ */
+.dt-task-pill {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+}
+
+.dt-task-pill.open {
+  background: var(--dt-amber-pale);
+  color: var(--dt-amber);
+  border: 1px solid rgba(217,119,6,0.2);
+}
+
+.dt-task-pill.done {
+  background: var(--dt-green-pale);
+  color: var(--dt-green);
+  border: 1px solid rgba(22,163,74,0.2);
+}
+
+/* ============================================================
+   Task List
+   ============================================================ */
+.dt-task-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dt-task-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--dt-border);
+  transition: background 0.1s;
+}
+
+.dt-task-item:last-child {
   border-bottom: none;
 }
 
-.badge-completed {
-  background-color: #28a745;
+.dt-task-item:hover {
+  background: #f8fafc;
 }
 
-.badge-pending {
-  background-color: #ffc107;
-  color: #333;
+.dt-task-item.completed .dt-task-title {
+  text-decoration: line-through;
+  color: var(--dt-text-muted);
 }
 
-.btn-delete {
-  padding: 0.25rem 0.5rem;
+.dt-task-left {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-width: 0;
+}
+
+.dt-task-title {
+  font-size: 0.9rem;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dt-task-status-icon {
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.dt-task-status-icon.open { color: var(--dt-amber); }
+.dt-task-status-icon.done { color: var(--dt-green); }
+
+.dt-task-actions {
+  display: flex;
+  gap: 0.4rem;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   Detail Header
+   ============================================================ */
+.dt-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.dt-detail-header-inner {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+}
+
+.dt-detail-stats {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+/* ============================================================
+   Forms
+   ============================================================ */
+.dt-form-card {
+  background: #fff;
+  border: 1px solid var(--dt-border);
+  border-radius: var(--dt-radius);
+  box-shadow: var(--dt-shadow-md);
+  overflow: hidden;
+}
+
+.dt-form-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--dt-border);
+  background: #f8fafc;
+}
+
+.dt-form-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--dt-blue-pale);
+  color: var(--dt-blue);
+  border-radius: var(--dt-radius-sm);
+  width: 40px;
+  height: 40px;
+  font-size: 1.15rem;
+  flex-shrink: 0;
+}
+
+.dt-form-card form {
+  padding: 1.5rem;
+}
+
+.dt-label {
+  font-weight: 600;
   font-size: 0.875rem;
+  color: var(--dt-text);
+  margin-bottom: 0.4rem;
+  display: block;
+}
+
+.dt-input {
+  border: 1px solid var(--dt-border);
+  border-radius: var(--dt-radius-sm);
+  font-size: 0.9rem;
+  padding: 0.55rem 0.75rem;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  font-family: var(--font-sans);
+  background: #fff;
+}
+
+.dt-input:focus {
+  border-color: var(--dt-blue);
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.12);
+  outline: none;
+}
+
+.dt-alert-error {
+  background: var(--dt-red-pale);
+  color: var(--dt-red);
+  border: 1px solid rgba(220,38,38,0.2);
+  border-radius: var(--dt-radius-sm);
+  font-size: 0.875rem;
+  padding: 0.65rem 0.9rem;
+  margin: 1rem 1.5rem 0;
+}
+
+/* ============================================================
+   Info Rows (sidebar)
+   ============================================================ */
+.dt-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid var(--dt-border);
+  font-size: 0.875rem;
+}
+
+.dt-info-row:last-child { border-bottom: none; }
+
+.dt-info-label { color: var(--dt-text-muted); }
+.dt-info-value { font-weight: 600; }
+
+.dt-progress-bar {
+  height: 6px;
+  background: var(--dt-border);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.dt-progress-fill {
+  height: 100%;
+  background: var(--dt-green);
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+/* ============================================================
+   Empty States
+   ============================================================ */
+.dt-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3.5rem 1.5rem;
+  text-align: center;
+}
+
+.dt-empty-state.sm {
+  padding: 2rem 1.5rem;
+}
+
+.dt-empty-icon {
+  font-size: 2.5rem;
+  color: var(--dt-border);
+}
+
+.dt-empty-icon.sm { font-size: 1.75rem; }
+
+/* ============================================================
+   About Page
+   ============================================================ */
+.dt-about-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.dt-about-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--dt-blue-pale);
+  color: var(--dt-blue);
+  border-radius: var(--dt-radius);
+  width: 52px;
+  height: 52px;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.dt-section-heading {
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--dt-text-muted);
+  margin-bottom: 0.85rem;
+}
+
+.dt-stack-item {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.65rem 0.85rem;
+  background: var(--dt-bg);
+  border: 1px solid var(--dt-border);
+  border-radius: var(--dt-radius-sm);
+}
+
+.dt-stack-icon {
+  font-size: 1.25rem;
+  color: var(--dt-blue);
+  flex-shrink: 0;
+}
+
+.dt-stack-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.dt-stack-desc {
+  font-size: 0.78rem;
+  color: var(--dt-text-muted);
+}
+
+/* ============================================================
+   Footer
+   ============================================================ */
+.dt-footer {
+  background: var(--dt-navy);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 1rem 0;
+  margin-top: auto;
+}
+
+.dt-footer-brand {
+  color: rgba(255,255,255,0.7);
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.dt-footer-meta {
+  color: rgba(255,255,255,0.35);
+  font-size: 0.8rem;
+}
+
+/* ============================================================
+   Utilities
+   ============================================================ */
+.fw-600 { font-weight: 600; }
+
+@media (max-width: 768px) {
+  .dt-feature-strip { flex-direction: column; }
+  .dt-feature-divider { width: auto; height: 1px; }
+  .dt-detail-header { flex-direction: column; }
+  .dt-task-item { flex-wrap: wrap; }
 }

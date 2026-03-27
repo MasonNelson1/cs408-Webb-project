@@ -1,31 +1,44 @@
 const Database = require('better-sqlite3');
 
-const createTodosTableSQL = `
-  CREATE TABLE IF NOT EXISTS todos (
+const createProjectsTableSQL = `
+  CREATE TABLE IF NOT EXISTS projects (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    task TEXT NOT NULL,
-    completed INTEGER DEFAULT 0
+    name TEXT NOT NULL,
+    description TEXT,
+    created_at DATETIME DEFAULT (datetime('now'))
   )`;
 
+const createTasksTableSQL = `
+  CREATE TABLE IF NOT EXISTS tasks (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    project_id INTEGER NOT NULL,
+    title TEXT NOT NULL,
+    status TEXT DEFAULT 'open',
+    created_at DATETIME DEFAULT (datetime('now')),
+    FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE
+  )`;
 
 function createDatabaseManager(dbPath) {
   const database = new Database(dbPath);
   console.log('Database manager created for:', dbPath);
   database.pragma('foreign_keys = ON');
-  database.exec(createTodosTableSQL);
+  database.exec(createProjectsTableSQL);
+  database.exec(createTasksTableSQL);
 
   function ensureConnected() {
     if (!database.open) {
       throw new Error('Database connection is not open');
     }
   }
+
   return {
     dbHelpers: {
 
       clearDatabase: () => {
         if (process.env.NODE_ENV === 'test') {
           ensureConnected();
-          database.prepare('DELETE FROM todos').run();
+          database.prepare('DELETE FROM tasks').run();
+          database.prepare('DELETE FROM projects').run();
         } else {
           console.warn('clearDatabase called outside of test environment. FIXME!');
         }
@@ -34,63 +47,86 @@ function createDatabaseManager(dbPath) {
       seedTestData: () => {
         if (process.env.NODE_ENV === 'test') {
           ensureConnected();
-          const insert = database.prepare('INSERT INTO todos (task, completed) VALUES (?, ?)');
-          const testData = [
-            { task: 'Test task 1', completed: 0 },
-            { task: 'Test task 2', completed: 1 },
-            { task: 'Test task 3', completed: 0 },
-          ];
-          const insertMany = database.transaction((todos) => {
-            for (const todo of todos) insert.run(todo.task, todo.completed);
+          const insertProject = database.prepare(
+            'INSERT INTO projects (name, description) VALUES (?, ?)'
+          );
+          const insertTask = database.prepare(
+            'INSERT INTO tasks (project_id, title, status) VALUES (?, ?, ?)'
+          );
+          const seed = database.transaction(() => {
+            const p1 = insertProject.run('Test Project Alpha', 'A sample test project').lastInsertRowid;
+            const p2 = insertProject.run('Test Project Beta', 'Another sample project').lastInsertRowid;
+            insertTask.run(p1, 'Write unit tests', 'open');
+            insertTask.run(p1, 'Set up CI pipeline', 'complete');
+            insertTask.run(p2, 'Design database schema', 'open');
           });
-          insertMany(testData);
+          seed();
           console.log('Seeding test data into database');
         } else {
           console.warn('seedTestData called outside of test environment. FIXME!');
-
         }
       },
 
-      getAllTodos: () => {
-        return database.prepare('SELECT * FROM todos ORDER BY id DESC').all();
+      // --- Projects ---
+      getAllProjects: () => {
+        return database.prepare(`
+          SELECT p.*,
+            COUNT(t.id) AS task_count,
+            SUM(CASE WHEN t.status = 'complete' THEN 1 ELSE 0 END) AS completed_count
+          FROM projects p
+          LEFT JOIN tasks t ON t.project_id = p.id
+          GROUP BY p.id
+          ORDER BY p.created_at DESC
+        `).all();
       },
 
-      getTodoById: (id) => {
-        return database.prepare('SELECT * FROM todos WHERE id = ?').get(id);
+      getProjectById: (id) => {
+        return database.prepare('SELECT * FROM projects WHERE id = ?').get(id);
       },
 
-      createTodo: (task) => {
-        const info = database.prepare('INSERT INTO todos (task) VALUES (?)').run(task);
+      createProject: (name, description) => {
+        const info = database.prepare(
+          'INSERT INTO projects (name, description) VALUES (?, ?)'
+        ).run(name, description);
         return info.lastInsertRowid;
       },
 
-      updateTodo: (id, task, completed) => {
-        const info = database.prepare('UPDATE todos SET task = ?, completed = ? WHERE id = ?')
-          .run(task, completed ? 1 : 0, id);
+      deleteProject: (id) => {
+        const info = database.prepare('DELETE FROM projects WHERE id = ?').run(id);
         return info.changes;
       },
 
-      deleteTodo: (id) => {
-        const info = database.prepare('DELETE FROM todos WHERE id = ?').run(id);
+      // --- Tasks ---
+      getTasksByProject: (projectId) => {
+        return database.prepare(
+          'SELECT * FROM tasks WHERE project_id = ? ORDER BY created_at ASC'
+        ).all(projectId);
+      },
+
+      createTask: (projectId, title) => {
+        const info = database.prepare(
+          'INSERT INTO tasks (project_id, title) VALUES (?, ?)'
+        ).run(projectId, title);
+        return info.lastInsertRowid;
+      },
+
+      completeTask: (taskId) => {
+        const info = database.prepare(
+          "UPDATE tasks SET status = 'complete' WHERE id = ?"
+        ).run(taskId);
         return info.changes;
       },
 
-      toggleTodo: (id) => {
-        const info = database.prepare('UPDATE todos SET completed = NOT completed WHERE id = ?').run(id);
+      deleteTask: (taskId) => {
+        const info = database.prepare('DELETE FROM tasks WHERE id = ?').run(taskId);
         return info.changes;
       },
-      getTotalTodos: () => {
-        return database.prepare('SELECT COUNT(*) AS c FROM todos').get().c;
-      },
 
-      getCompletedTodos: () => {
-        return database.prepare('SELECT COUNT(*) AS c FROM todos WHERE completed > 0').get().c;
+      getTotalProjects: () => {
+        return database.prepare('SELECT COUNT(*) AS c FROM projects').get().c;
       },
     }
   };
 }
 
-
-module.exports = {
-  createDatabaseManager,
-};
+module.exports = { createDatabaseManager };

@@ -34,8 +34,16 @@ function createDatabaseManager(dbPath) {
   return {
     dbHelpers: {
       getAllProjects: () => {
-        return database.prepare('SELECT * FROM projects ORDER BY created_at DESC').all();
-      },
+  return database.prepare(`
+    SELECT p.*,
+      COUNT(t.id) as task_count,
+      SUM(CASE WHEN t.status = 'complete' THEN 1 ELSE 0 END) as completed_count
+    FROM projects p
+    LEFT JOIN tasks t ON t.project_id = p.id
+    GROUP BY p.id
+    ORDER BY p.created_at DESC
+  `).all();
+},
       getProjectById: (id) => {
         return database.prepare('SELECT * FROM projects WHERE id = ?').get(id);
       },

@@ -33,7 +33,6 @@ function createDatabaseManager(dbPath) {
 
   return {
     dbHelpers: {
-      // ── Projects ──────────────────────────────────────────────
       getAllProjects: () => {
         return database.prepare('SELECT * FROM projects ORDER BY created_at DESC').all();
       },
@@ -50,8 +49,6 @@ function createDatabaseManager(dbPath) {
         database.prepare('DELETE FROM tasks WHERE project_id = ?').run(id);
         database.prepare('DELETE FROM projects WHERE id = ?').run(id);
       },
-
-      // ── Tasks ─────────────────────────────────────────────────
       getTasksByProject: (projectId) => {
         return database.prepare(
           'SELECT * FROM tasks WHERE project_id = ? ORDER BY created_at ASC'
@@ -71,8 +68,6 @@ function createDatabaseManager(dbPath) {
       deleteTask: (taskId) => {
         database.prepare('DELETE FROM tasks WHERE id = ?').run(taskId);
       },
-
-      // ── Test helpers ──────────────────────────────────────────
       clearDatabase: () => {
         if (process.env.NODE_ENV === 'test') {
           ensureConnected();
@@ -100,4 +95,3 @@ function createDatabaseManager(dbPath) {
 }
 
 module.exports = { createDatabaseManager };
-EOF

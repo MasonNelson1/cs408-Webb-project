@@ -66,4 +66,12 @@ router.post('/projects/:id/tasks/:taskId/delete', function (req, res) {
   res.redirect(`/projects/${req.params.id}`);
 });
 
+/* POST delete a project */
+router.post('/projects/:id/delete', function (req, res) {
+  const project = req.db.getProjectById(req.params.id);
+  if (!project) return res.status(404).render('error', { message: 'Project not found', error: { status: 404 } });
+  req.db.deleteProject(req.params.id);
+  res.redirect('/projects');
+});
+
 module.exports = router;

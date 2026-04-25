@@ -11,33 +11,56 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet" />
   <link rel="stylesheet" href="/stylesheets/style.css" />
+  <style>
+    body { background: #12001f; color: #f1f0f5; }
+    .dt-navbar {
+      background: rgba(18,0,31,0.95);
+      border-bottom: 1px solid rgba(168,85,247,0.2);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .dt-brand { color: #fff !important; font-weight: 700; font-size: 1.1rem; }
+    .dt-brand:hover { color: #c084fc !important; }
+    .nav-link { color: rgba(255,255,255,0.7) !important; font-weight: 500; }
+    .nav-link:hover { color: #c084fc !important; }
+    .dt-btn-new {
+      background: linear-gradient(135deg, #a855f7, #7c3aed);
+      color: #fff !important;
+      font-weight: 600;
+      padding: 0.45rem 1.25rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .dt-btn-new:hover { opacity: 0.85; }
+    .dt-footer {
+      background: rgba(18,0,31,0.95);
+      border-top: 1px solid rgba(168,85,247,0.2);
+      padding: 1.5rem 0;
+      color: rgba(255,255,255,0.4);
+      font-size: 0.875rem;
+    }
+    .dt-footer-brand { color: rgba(255,255,255,0.7); font-weight: 600; }
+  </style>
 </head>
 <body class="d-flex flex-column min-vh-100">
 
   <nav class="navbar navbar-expand-lg dt-navbar">
     <div class="container">
       <a class="navbar-brand dt-brand" href="/">
-        <span class="dt-brand-icon">
-          <i class="bi bi-kanban-fill"></i>
-        </span>
-        DevTrack
+        <i class="bi bi-kanban-fill me-2" style="color:#a855f7;"></i>DevTrack
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" style="border-color:rgba(168,85,247,0.4);">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navMenu">
-        <ul class="navbar-nav ms-auto gap-1">
-          <li class="nav-item">
-            <a class="nav-link" href="/">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/projects">Projects</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/about">About</a>
-          </li>
+        <ul class="navbar-nav ms-auto gap-1 align-items-center">
+          <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="/projects">Projects</a></li>
+          <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
           <li class="nav-item ms-2">
-            <a class="btn dt-btn-new" href="/projects/new">
+            <a class="dt-btn-new" href="/projects/new">
               <i class="bi bi-plus-lg me-1"></i>New Project
             </a>
           </li>
@@ -54,12 +77,9 @@
     <div class="container">
       <div class="d-flex flex-wrap justify-content-between align-items-center">
         <span class="dt-footer-brand">
-          <i class="bi bi-kanban-fill me-1"></i>DevTrack
+          <i class="bi bi-kanban-fill me-1" style="color:#a855f7;"></i>DevTrack
         </span>
-        <span class="dt-footer-meta">
-          Simple project tracking for developers &nbsp;·&nbsp;
-          CS408 Course Project
-        </span>
+        <span>Simple project tracking for developers &nbsp;·&nbsp; CS408 Course Project</span>
       </div>
     </div>
   </footer>

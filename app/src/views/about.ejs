@@ -1,74 +1,75 @@
-<div class="container py-5">
-  <div class="row justify-content-center">
-    <div class="col-lg-7">
+<div style="padding: 3rem 0;">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-7">
 
-      <div class="mb-4">
-        <a href="/" class="dt-back-link">
-          <i class="bi bi-arrow-left me-1"></i>Home
-        </a>
-      </div>
-
-      <div class="dt-about-header mb-5">
-        <span class="dt-about-icon"><i class="bi bi-kanban-fill"></i></span>
-        <div>
-          <h2 class="dt-page-title mb-1">About DevTrack</h2>
-          <p class="dt-page-sub mb-0">A lightweight project and issue tracker</p>
+        <div class="mb-4">
+          <a href="/" style="color:rgba(255,255,255,0.5); text-decoration:none; font-size:0.9rem;">
+            <i class="bi bi-arrow-left me-1"></i>Home
+          </a>
         </div>
-      </div>
 
-      <div class="dt-card mb-4">
-        <div class="p-4">
-          <h5 class="dt-section-heading">What is DevTrack?</h5>
-          <p>
+        <div class="d-flex align-items-center gap-3 mb-5">
+          <div style="width:52px;height:52px;background:linear-gradient(135deg,#a855f7,#7c3aed);border-radius:14px;display:flex;align-items:center;justify-content:center;">
+            <i class="bi bi-kanban-fill" style="color:#fff;font-size:1.4rem;"></i>
+          </div>
+          <div>
+            <h2 style="color:#fff;font-weight:700;margin:0;">About DevTrack</h2>
+            <p style="color:rgba(255,255,255,0.45);margin:0;font-size:0.9rem;">A lightweight project and issue tracker</p>
+          </div>
+        </div>
+
+        <!-- What is DevTrack -->
+        <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(168,85,247,0.2);border-radius:14px;padding:1.75rem;margin-bottom:1.25rem;">
+          <h5 style="color:#c084fc;font-weight:600;font-size:0.8rem;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:1rem;">What is DevTrack?</h5>
+          <p style="color:rgba(255,255,255,0.75);line-height:1.75;margin-bottom:0.75rem;">
             DevTrack is a simple, no-nonsense project tracker built for individual developers and small teams.
             It cuts through the complexity of enterprise tools like Jira or Asana and gives you exactly what you
             need: projects, tasks, and status.
           </p>
-          <p class="mb-0">
+          <p style="color:rgba(255,255,255,0.75);line-height:1.75;margin:0;">
             Create a project, add tasks to it, mark them complete, and delete them when they're done.
-            That's it. No boards, no epics, no sprints — just the work.
+            No boards, no epics, no sprints — just the work.
           </p>
         </div>
-      </div>
 
-      <div class="dt-card mb-4">
-        <div class="p-4">
-          <h5 class="dt-section-heading">Tech Stack</h5>
-          <div class="row g-3 mt-1">
+        <!-- Tech Stack -->
+        <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(168,85,247,0.2);border-radius:14px;padding:1.75rem;margin-bottom:1.25rem;">
+          <h5 style="color:#c084fc;font-weight:600;font-size:0.8rem;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:1.25rem;">Tech Stack</h5>
+          <div class="row g-3">
             <% const stack = [
-              { icon: 'bi-server', label: 'Node.js + Express', desc: 'Backend server & routing' },
-              { icon: 'bi-database', label: 'SQLite (better-sqlite3)', desc: 'Persistent relational storage' },
-              { icon: 'bi-file-code', label: 'EJS Templates', desc: 'Server-side HTML rendering' },
-              { icon: 'bi-bootstrap', label: 'Bootstrap 5', desc: 'UI framework & layout' },
-              { icon: 'bi-cloud-upload', label: 'AWS EC2', desc: 'Deployment environment' },
-              { icon: 'bi-box-seam', label: 'Docker + Nginx', desc: 'Containerized deployment' },
+              { icon: 'bi-server', label: 'Node.js + Express', desc: 'Backend server & routing', color: '#a855f7' },
+              { icon: 'bi-database', label: 'SQLite (better-sqlite3)', desc: 'Persistent relational storage', color: '#818cf8' },
+              { icon: 'bi-file-code', label: 'EJS Templates', desc: 'Server-side HTML rendering', color: '#2dd4bf' },
+              { icon: 'bi-bootstrap', label: 'Bootstrap 5', desc: 'UI framework & layout', color: '#c084fc' },
+              { icon: 'bi-cloud-upload', label: 'AWS EC2', desc: 'Deployment environment', color: '#fb923c' },
+              { icon: 'bi-box-seam', label: 'Docker + Nginx', desc: 'Containerized deployment', color: '#4ade80' },
             ] %>
             <% stack.forEach(function(item) { %>
               <div class="col-sm-6">
-                <div class="dt-stack-item">
-                  <i class="bi <%= item.icon %> dt-stack-icon"></i>
+                <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(168,85,247,0.15);border-radius:10px;padding:1rem;display:flex;align-items:center;gap:0.75rem;">
+                  <i class="bi <%= item.icon %>" style="font-size:1.25rem;color:<%= item.color %>;flex-shrink:0;"></i>
                   <div>
-                    <div class="dt-stack-label"><%= item.label %></div>
-                    <div class="dt-stack-desc"><%= item.desc %></div>
+                    <div style="color:#fff;font-weight:500;font-size:0.9rem;"><%= item.label %></div>
+                    <div style="color:rgba(255,255,255,0.4);font-size:0.8rem;"><%= item.desc %></div>
                   </div>
                 </div>
               </div>
             <% }); %>
           </div>
         </div>
-      </div>
 
-      <div class="dt-card">
-        <div class="p-4">
-          <h5 class="dt-section-heading">Course Context</h5>
-          <p class="mb-0">
+        <!-- Course Context -->
+        <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(168,85,247,0.2);border-radius:14px;padding:1.75rem;">
+          <h5 style="color:#c084fc;font-weight:600;font-size:0.8rem;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:1rem;">Course Context</h5>
+          <p style="color:rgba(255,255,255,0.75);line-height:1.75;margin:0;">
             DevTrack is built as the final project for CS408 Full Stack Web Development at Boise State University.
             It demonstrates a complete full-stack architecture: relational database design, RESTful routing,
             server-side rendering, containerized deployment, and automated end-to-end testing with Playwright.
           </p>
         </div>
-      </div>
 
+      </div>
     </div>
   </div>
 </div>

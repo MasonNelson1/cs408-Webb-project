@@ -54,12 +54,11 @@ router.post('/projects/:id/tasks', function (req, res) {
   res.redirect(`/projects/${project.id}`);
 });
 
-/* POST complete a task */
+/* POST toggle a task complete/open */
 router.post('/projects/:id/tasks/:taskId/complete', function (req, res) {
-  req.db.completeTask(req.params.taskId);
+  req.db.toggleTask(req.params.taskId);
   res.redirect(`/projects/${req.params.id}`);
 });
-
 /* POST delete a task */
 router.post('/projects/:id/tasks/:taskId/delete', function (req, res) {
   req.db.deleteTask(req.params.taskId);
@@ -72,6 +71,15 @@ router.post('/projects/:id/delete', function (req, res) {
   if (!project) return res.status(404).render('error', { message: 'Project not found', error: { status: 404 } });
   req.db.deleteProject(req.params.id);
   res.redirect('/projects');
+});
+
+/* POST edit a task */
+router.post('/projects/:id/tasks/:taskId/edit', function (req, res) {
+  const { title } = req.body;
+  if (title && title.trim() !== '') {
+    req.db.editTask(req.params.taskId, title.trim());
+  }
+  res.redirect(`/projects/${req.params.id}`);
 });
 
 module.exports = router;

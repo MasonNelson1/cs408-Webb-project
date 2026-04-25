@@ -73,8 +73,16 @@ function createDatabaseManager(dbPath) {
           "UPDATE tasks SET status = 'complete' WHERE id = ?"
         ).run(taskId);
       },
+      toggleTask: (taskId) => {
+        const task = database.prepare('SELECT status FROM tasks WHERE id = ?').get(taskId);
+        const newStatus = task.status === 'complete' ? 'open' : 'complete';
+        database.prepare('UPDATE tasks SET status = ? WHERE id = ?').run(newStatus, taskId);
+      },
       deleteTask: (taskId) => {
         database.prepare('DELETE FROM tasks WHERE id = ?').run(taskId);
+      },
+      editTask: (taskId, title) => {
+        database.prepare('UPDATE tasks SET title = ? WHERE id = ?').run(title, taskId);
       },
       clearDatabase: () => {
         if (process.env.NODE_ENV === 'test') {
